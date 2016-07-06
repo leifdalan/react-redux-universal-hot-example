@@ -40,6 +40,7 @@ export default class App extends Component {
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
+    location: PropTypes.object
   };
 
   static contextTypes = {
@@ -62,7 +63,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {user, loaded, children, location} = this.props;
+    const {user, children, location} = this.props;
     const styles = require('./App.scss');
     console.error('styles', styles);
     return (
