@@ -12,6 +12,7 @@ import { InfoBar } from 'components';
 import { push } from 'react-router-redux';
 import config from '../../config';
 import { asyncConnect } from 'redux-async-connect';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
@@ -28,14 +29,17 @@ import { asyncConnect } from 'redux-async-connect';
   }
 }])
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({
+    user: state.auth.user,
+    loaded: state.reduxAsyncConnect.loaded,
+  }),
   {logout, pushState: push})
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    pushState: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
@@ -58,11 +62,12 @@ export default class App extends Component {
   };
 
   render() {
-    const {user} = this.props;
+    const {user, loaded, children, location} = this.props;
     const styles = require('./App.scss');
-
+    console.error('styles', styles);
     return (
       <div className={styles.app}>
+
         <Helmet {...config.app.head}/>
         <Navbar fixedTop>
           <Navbar.Header>
@@ -112,8 +117,18 @@ export default class App extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className={styles.appContent}>
-          {this.props.children}
+        <div className={`${styles.appContent}`}>
+          <ReactCSSTransitionGroup
+            component="div"
+            transitionName="example"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+            className="container"
+          >
+            {React.cloneElement(children, {
+              key: location.pathname
+            })}
+          </ReactCSSTransitionGroup>
         </div>
         <InfoBar/>
 

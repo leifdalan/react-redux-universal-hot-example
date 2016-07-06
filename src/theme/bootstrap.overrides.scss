@@ -14,3 +14,32 @@
   color: #33e0ff;
   background-color: transparent;
 }
+
+.container {
+  position: relative;
+}
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .2s linear;
+  position:absolute;
+  width: calc(100% - 30px);
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .2s linear;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
+}
+
+.link-active {
+  color: #bbbbbb;
+  text-decoration: none;
+}

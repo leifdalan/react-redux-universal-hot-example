@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import Helmet from 'react-helmet';
 import {connect} from 'react-redux';
 import * as widgetActions from 'redux/modules/widgets';
-import {isLoaded, load as loadWidgets} from 'redux/modules/widgets';
+import {load as loadWidgets} from 'redux/modules/widgets';
 import {initializeWithKey} from 'redux-form';
 import { WidgetForm } from 'components';
 import { asyncConnect } from 'redux-async-connect';
@@ -10,12 +10,7 @@ import {createSelector} from 'reselect';
 import {getWidgetsSelector} from 'redux/modules/widgets';
 
 @asyncConnect([{
-  deferred: true,
-  promise: ({store: {dispatch, getState}}) => {
-    if (!isLoaded(getState())) {
-      return dispatch(loadWidgets());
-    }
-  }
+  promise: ({store: {dispatch}}) => dispatch(loadWidgets())
 }])
 @connect(
   createSelector(getWidgetsSelector, ({
@@ -52,10 +47,11 @@ export default class Widgets extends Component {
       refreshClassName += ' fa-spin';
     }
     const styles = require('./Widgets.scss');
+    console.log('hello');
     return (
       <div className={styles.widgets + ' container'}>
         <h1>
-          Widgets
+          Widgetsz
           <button className={styles.refreshBtn + ' btn btn-success'} onClick={load}>
             <i className={refreshClassName}/> {' '} Reload Widgets
           </button>

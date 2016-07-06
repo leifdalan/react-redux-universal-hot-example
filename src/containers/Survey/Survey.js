@@ -29,7 +29,7 @@ export default class Survey extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <h1>Survey</h1>
         <Helmet title="Survey"/>
 

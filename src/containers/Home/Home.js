@@ -13,7 +13,7 @@ export default class Home extends Component {
       <div className={styles.home}>
         <Helmet title="Home"/>
         <div className={styles.masthead}>
-          <div className="container">
+          <div>
             <div className={styles.logo}>
               <p>
                 <img src={logoImage}/>
@@ -48,7 +48,7 @@ export default class Home extends Component {
           </div>
         </div>
 
-        <div className="container">
+        <div>
           <div className={styles.counterContainer}>
             <CounterButton multireducerKey="counter1"/>
             <CounterButton multireducerKey="counter2"/>

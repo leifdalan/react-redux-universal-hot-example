@@ -15,7 +15,7 @@ class LoginSuccess extends Component {
   render() {
     const {user, logout} = this.props;
     return (user &&
-      <div className="container">
+      <div>
         <h1>Login Success</h1>
 
         <div>
