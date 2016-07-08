@@ -64,7 +64,8 @@ export default class App extends Component {
   render() {
     const { user, notifs } = this.props;
     const styles = require('./App.scss');
-
+    const appContent = { styles };
+    console.log('farts', appContent);
     return (
       <div className={styles.app}>
         <Helmet {...config.app.head} />
@@ -120,7 +121,7 @@ export default class App extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className={styles.appContent}>
+        <div className={`${appContent} farts`}>
           {notifs.global && <div className="container">
             <Notifs
               className={styles.notifs}

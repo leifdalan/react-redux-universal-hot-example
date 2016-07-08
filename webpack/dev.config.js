@@ -39,7 +39,7 @@ if (process.env.WEBPACK_DLLS === '1' && !validDLLs) {
 }
 
 var webpackConfig = module.exports = {
-  devtool: 'inline-source-map',
+  devtool: '#cheap-module-eval-source-map',
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [

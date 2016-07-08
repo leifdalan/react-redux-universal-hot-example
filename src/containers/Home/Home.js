@@ -47,7 +47,7 @@ export default class Home extends Component {
               count large />
 
             <p className={styles.humility}>
-              Created and maintained by <a href="https://twitter.com/erikras" target="_blank">@erikras</a>.
+              zzCreated and maintained by <a href="https://twitter.com/erikras" target="_blank">@erikras</a>.
             </p>
           </div>
         </div>

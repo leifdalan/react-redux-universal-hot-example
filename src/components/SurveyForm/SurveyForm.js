@@ -19,7 +19,8 @@ function asyncValidate(data, dispatch, { isValidEmail }) {
   fields: ['name', 'email', 'occupation', 'currentlyEmployed', 'sex'],
   validate: surveyValidation,
   asyncValidate,
-  asyncBlurFields: ['email']
+  asyncBlurFields: ['email'],
+  destroyOnUnmount: false,
 })
 export default
 class SurveyForm extends Component {
@@ -63,11 +64,10 @@ class SurveyForm extends Component {
           </div>
         </div>
       </div>;
-
     return (
       <div>
         <form className="form-horizontal" onSubmit={handleSubmit}>
-          {renderInput(name, 'Full Name')}
+          {renderInput(name, 'Full Namess')}
           {renderInput(email, 'Email', true)}
           {renderInput(occupation, 'Occupation')}
           <div className="form-group">
