@@ -17,7 +17,7 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import getRoutes from './routes';
-
+import tumblr from 'tumblr.js';
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
 const pretty = new PrettyError();
 const app = new Express();
@@ -26,6 +26,13 @@ const proxy = httpProxy.createProxyServer({
   target: targetUrl,
   ws: true
 });
+
+// tumblrClient.blogPosts('vega-june.tumblr.com', (err, data) => {
+//   console.log(data);
+// });
+
+
+
 
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
@@ -47,11 +54,12 @@ server.on('upgrade', (req, socket, head) => {
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
+  console.log(error);
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
   if (!res.headersSent) {
-    res.writeHead(500, { 'content-type': 'application/json' });
+    // res.writeHead(500, { 'content-type': 'application/json' });
   }
 
   const json = { error: 'proxy_error', reason: error.message };

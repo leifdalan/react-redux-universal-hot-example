@@ -12,7 +12,7 @@ export function initialize(secret) {
 
   const opts = {
     jwtFromRequest: tokenExtractor,
-    secretOrKey: secret
+    secretOrKey: 'secret'
   };
 
   passport.use(new Strategy(opts, (jwtPayload, done) => {

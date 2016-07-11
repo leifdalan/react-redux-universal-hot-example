@@ -1,5 +1,5 @@
 require('babel-polyfill');
-
+const local = require('../local');
 const environment = {
   development: {
     isProduction: false
@@ -9,7 +9,7 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-module.exports = Object.assign({
+const exporter = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   apiHost: process.env.APIHOST || 'localhost',
@@ -35,5 +35,18 @@ module.exports = Object.assign({
       ]
     }
   },
-
 }, environment);
+
+Object.keys(local).forEach((key) => {
+  Object.assign({
+    [key]: local[key]
+  }, exporter);
+});
+
+Object.keys(process.env).forEach((key) => {
+  Object.assign({
+    [key]: process.env[key]
+  }, exporter);
+});
+
+module.exports = exporter;

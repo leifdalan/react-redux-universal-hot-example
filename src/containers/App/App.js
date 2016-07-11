@@ -13,7 +13,14 @@ import { Notifs, InfoBar } from 'components';
 import { push } from 'react-router-redux';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
+import Radium from 'radium';
+import {
+  BRAND_STYLES,
+  NOTIFS,
+  APP_CONTENT,
+} from './App.styles';
 
+@Radium
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
@@ -22,6 +29,7 @@ import { asyncConnect } from 'redux-connect';
       promises.push(dispatch(loadAuth()));
     }
     if (!isInfoLoaded(getState())) {
+      console.log('info is not loaded...');
       promises.push(dispatch(loadInfo()));
     }
     return Promise.all(promises);
@@ -63,17 +71,14 @@ export default class App extends Component {
 
   render() {
     const { user, notifs } = this.props;
-    const styles = require('./App.scss');
-    const appContent = { styles };
-    console.log('farts', appContent);
     return (
-      <div className={styles.app}>
+      <div>
         <Helmet {...config.app.head} />
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to="/" activeStyle={{ color: '#33e0ff' }}>
-                <div className={styles.brand} />
+                <div className={BRAND_STYLES} />
                 <span>{config.app.title}</span>
               </IndexLink>
             </Navbar.Brand>
@@ -108,7 +113,7 @@ export default class App extends Component {
                 </NavItem>
               </LinkContainer>}
             </Nav>
-            {user && <p className={`${styles.loggedInMessage} navbar-text`}>
+            {user && <p className={'navbar-text'}>
               Logged in as <strong>{user.email}</strong>.
             </p>}
             <Nav navbar pullRight>
@@ -121,10 +126,10 @@ export default class App extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className={`${appContent} farts`}>
+        <div style={APP_CONTENT}>
           {notifs.global && <div className="container">
             <Notifs
-              className={styles.notifs}
+              style={NOTIFS}
               namespace="global"
               NotifComponent={props => <Alert bsStyle={props.kind}>{props.message}</Alert>}
             />

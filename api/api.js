@@ -12,9 +12,10 @@ import SocketIo from 'socket.io';
 import passport from 'passport';
 import * as helpers from './helpers';
 import * as database from './database';
-
+import redis from 'connect-redis';
 const { auth } = helpers;
 
+const RedisStore = redis(session);
 const pretty = new PrettyError();
 const app = express();
 
@@ -26,22 +27,20 @@ io.path('/ws');
 auth.initialize(apiConfig.secret);
 
 app.use(morgan('dev'));
+app.use(session({ store: new RedisStore({
+  host: 'localhost',
+  port: 6379
+}), secret: 'hey you' }));
 
-app.use(session({
-  secret: 'react and redux rule!!!!',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
-}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
-
+// app.use(passport.session());
 app.use((req, res) => {
   const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
 
   const { action, params } = mapUrl(actions, splittedUrlPath);
-
+  console.log(action);
   if (action) {
     action(req, params, { ...helpers, database })
     .then((result) => {
